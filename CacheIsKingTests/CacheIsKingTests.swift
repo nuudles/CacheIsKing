@@ -174,6 +174,22 @@ class CacheIsKingTests: XCTestCase {
 		NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationDidEnterBackgroundNotification, object: UIApplication.sharedApplication())
 
 		XCTAssert(cache.count == 0)
+
+		cache.setItem(123, forKey: 123)
+		cache.setItem(234, forKey: 234)
+		cache.setItem(345, forKey: 345)
+		cache.setItem(456, forKey: 456)
+
+		XCTAssert(cache.count == 4)
+
+		// Make sure an unknown key doesn't have any weird side effects
+		cache[567] = nil
+
+		XCTAssert(cache.count == 4)
+
+		cache.removeItemForKey(999)
+
+		XCTAssert(cache.count == 4)
 	}
 
 	func testCountLimit() {
