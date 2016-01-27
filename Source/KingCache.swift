@@ -33,13 +33,13 @@ public class KingCache {
 
 		var notificationObserver = NSNotificationCenter.defaultCenter()
 			.addObserverForName(UIApplicationDidReceiveMemoryWarningNotification,
-				object: nil,
+				object: UIApplication.sharedApplication(),
 				queue: nil,
 				usingBlock: removalBlock)
 		notificationObservers.append(notificationObserver)
 		notificationObserver = NSNotificationCenter.defaultCenter()
 			.addObserverForName(UIApplicationDidEnterBackgroundNotification,
-				object: nil,
+				object: UIApplication.sharedApplication(),
 				queue: nil,
 				usingBlock: removalBlock)
 		notificationObservers.append(notificationObserver)
