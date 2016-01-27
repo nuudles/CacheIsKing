@@ -10,9 +10,14 @@ import Foundation
 
 /// This code was taken from:
 /// http://stackoverflow.com/questions/24119624/how-to-create-dictionary-that-can-hold-anything-in-key-or-all-the-possible-type
+///
+/// `AnyKey` is a simple struct that conforms to `Hashable` to allow any other `Hashable` key to be used in the cache dictionary
 struct AnyKey: Hashable {
+	/// The underlying value
 	private let underlying: Any
+	/// The hashing function
 	private let hashValueFunc: () -> Int
+	/// The equality function
 	private let equalityFunc: (Any) -> Bool
 
 	init<T: Hashable>(_ key: T) {
@@ -31,6 +36,7 @@ struct AnyKey: Hashable {
 		}
 	}
 
+	/// `Hashable` protocol conformance
 	var hashValue: Int { return hashValueFunc() }
 }
 
