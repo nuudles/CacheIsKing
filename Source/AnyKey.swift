@@ -14,11 +14,11 @@ import Foundation
 /// `AnyKey` is a simple struct that conforms to `Hashable` to allow any other `Hashable` key to be used in the cache dictionary
 struct AnyKey: Hashable {
 	/// The underlying value
-	private let underlying: Any
+	fileprivate let underlying: Any
 	/// The hashing function
-	private let hashValueFunc: () -> Int
+	fileprivate let hashValueFunc: () -> Int
 	/// The equality function
-	private let equalityFunc: (Any) -> Bool
+	fileprivate let equalityFunc: (Any) -> Bool
 
 	init<T: Hashable>(_ key: T) {
 		underlying = key
