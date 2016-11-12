@@ -215,6 +215,7 @@
 					};
 					30D75C331C57D17400F4E62D = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0810;
 					};
 					30D75C401C57D2CA00F4E62D = {
 						CreatedOnToolsVersion = 7.2;
@@ -514,6 +515,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -564,6 +566,7 @@
 				PRODUCT_NAME = CacheIsKing;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
