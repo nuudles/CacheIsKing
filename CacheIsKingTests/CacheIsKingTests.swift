@@ -12,11 +12,11 @@ import XCTest
 class CacheIsKingTests: XCTestCase {
 	func testSettingAndGettingItems() {
 		let cache = KingCache()
-		cache.setItem(123, forKey: "123")
+		cache.set(item: 123, for: "123")
 
 		XCTAssert(cache.cacheDictionary.count == 1)
 		XCTAssert(cache.count == 1)
-		XCTAssert(cache.itemForKey("123") == 123)
+		XCTAssert(cache.item(for: "123") == 123)
 		XCTAssert(cache.cacheDictionary[AnyKey("123")] as? Int == .some(123))
 		XCTAssert(cache[123] == nil)
 
@@ -24,7 +24,7 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.cacheDictionary.count == 2)
 		XCTAssert(cache.count == 2)
-		XCTAssert(cache.itemForKey(234) == "234")
+		XCTAssert(cache.item(for: 234) == "234")
 		XCTAssert(cache.cacheDictionary[AnyKey(234)] as? String == .some("234"))
 
 		// Test setting/getting an array
@@ -33,7 +33,7 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.cacheDictionary.count == 3)
 		XCTAssert(cache.count == 3)
-		if let fetchedArray: [Int] = cache.itemForKey(5) {
+		if let fetchedArray: [Int] = cache.item(for: 5) {
 			XCTAssert(fetchedArray == array)
 		} else {
 			XCTFail("Expected an int array")
@@ -42,7 +42,7 @@ class CacheIsKingTests: XCTestCase {
 		let testStruct = TestStruct(name: "Testing", value: Int(arc4random_uniform(100000)))
 		cache["TestingStruct"] = testStruct
 
-		guard let fetchedStruct: TestStruct = cache.itemForKey("TestingStruct") else {
+		guard let fetchedStruct: TestStruct = cache.item(for: "TestingStruct") else {
 			XCTFail()
 			return
 		}
@@ -54,25 +54,25 @@ class CacheIsKingTests: XCTestCase {
 		let cache = KingCache()
 
 		let floatKey: Float = 123.456
-		cache.setItem(123.456, forKey: floatKey)
-		XCTAssert(cache.itemForKey(floatKey) as Double? == .some(123.456))
+		cache.set(item: 123.456, for: floatKey)
+		XCTAssert(cache.item(for: floatKey) as Double? == .some(123.456))
 
 		cache[floatKey] = 456.789
 		XCTAssert(cache.count == 1)
 		XCTAssert(cache[floatKey] as? Double == .some(456.789))
 
-		cache.setItem("123.456", forKey: "123.456")
+		cache.set(item: "123.456", for: "123.456")
 		XCTAssert(cache.count == 2)
-		XCTAssert(cache.itemForKey("123.456") as String? == .some("123.456"))
+		XCTAssert(cache.item(for: "123.456") as String? == .some("123.456"))
 
 		let boolKey = true
-		cache.setItem(true, forKey: boolKey)
+		cache.set(item: true, for: boolKey)
 		XCTAssert(cache.count == 3)
-		XCTAssert(cache.itemForKey(boolKey) as Bool? == .some(true))
+		XCTAssert(cache.item(for: boolKey) as Bool? == .some(true))
 
-		cache.removeItemForKey(boolKey)
+		cache.remove(for: boolKey)
 		XCTAssert(cache.count == 2)
-		XCTAssert(cache.itemForKey(boolKey) as Bool? == .none)
+		XCTAssert(cache.item(for: boolKey) as Bool? == .none)
 	}
 
 	func testSettingAndGettingEnum() {
@@ -81,9 +81,9 @@ class CacheIsKingTests: XCTestCase {
 		cache["DEF"] = TestEnum.def("BlahBlahBlah")
 		cache["GHI"] = TestEnum.ghi(-500)
 
-		guard let abc: TestEnum = cache.itemForKey("ABC"),
-			let def: TestEnum = cache.itemForKey("DEF"),
-			let ghi: TestEnum = cache.itemForKey("GHI")
+		guard let abc: TestEnum = cache.item(for: "ABC"),
+			let def: TestEnum = cache.item(for: "DEF"),
+			let ghi: TestEnum = cache.item(for: "GHI")
 			else {
 				XCTFail()
 				return
@@ -131,14 +131,14 @@ class CacheIsKingTests: XCTestCase {
 
 	func testRemovingItems() {
 		let cache = KingCache()
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		XCTAssert(cache.count == 4)
 
-		cache.removeItemForKey(123)
+		cache.remove(for: 123)
 
 		XCTAssert(cache.count == 3)
 		XCTAssert(cache[123] == nil)
@@ -148,14 +148,14 @@ class CacheIsKingTests: XCTestCase {
 		XCTAssert(cache.count == 2)
 		XCTAssert(cache[234] == nil)
 
-		cache.removeAllItems()
+		cache.removeAll()
 
 		XCTAssert(cache.count == 0)
 
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		XCTAssert(cache.count == 4)
 
@@ -164,10 +164,10 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.count == 0)
 
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		XCTAssert(cache.count == 4)
 
@@ -176,10 +176,10 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.count == 0)
 
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		XCTAssert(cache.count == 4)
 
@@ -188,17 +188,17 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.count == 4)
 
-		cache.removeItemForKey(999)
+		cache.remove(for: 999)
 
 		XCTAssert(cache.count == 4)
 	}
 
 	func testCountLimit() {
 		let cache = KingCache()
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		XCTAssert(cache.count == 4)
 
@@ -206,26 +206,26 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.count == 3)
 
-		cache.removeAllItems()
+		cache.removeAll()
 
 		XCTAssert(cache.count == 0)
 
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		XCTAssert(cache.count == 3)
 
 		cache[567] = 567
 		XCTAssert(cache.count == 3)
 
-		cache.removeAllItems()
+		cache.removeAll()
 
-		cache.setItem(123, forKey: 123)
-		cache.setItem(234, forKey: 234)
-		cache.setItem(345, forKey: 345)
-		cache.setItem(456, forKey: 456)
+		cache.set(item: 123, for: 123)
+		cache.set(item: 234, for: 234)
+		cache.set(item: 345, for: 345)
+		cache.set(item: 456, for: 456)
 
 		cache.countLimit = 2
 
@@ -242,9 +242,9 @@ class CacheIsKingTests: XCTestCase {
 		let cache = KingCache()
 
 		let oldCache = NSCache<AnyObject, AnyObject>()
-		cache.setItem(oldCache, forKey: "InceptionCache")
+		cache.set(item: oldCache, for: "InceptionCache")
 
-		guard let _: NSCache<AnyObject, AnyObject> = cache.itemForKey("InceptionCache") else {
+		guard let _: NSCache<AnyObject, AnyObject> = cache.item(for: "InceptionCache") else {
 			XCTFail("Expected an NSCache object")
 			return
 		}

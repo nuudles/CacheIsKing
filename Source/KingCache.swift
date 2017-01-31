@@ -80,7 +80,7 @@ open class KingCache {
 	/// - parameter item: The item to be cached
 	/// - parameter key: The key with which to cache the item
 	///
-	open func setItem<K: Hashable>(_ item: Any, forKey key: K) {
+	open func set<K: Hashable>(item: Any, for key: K) {
 		cacheDictionary[AnyKey(key)] = item
 		evictItemsIfNeeded()
 	}
@@ -93,7 +93,7 @@ open class KingCache {
 	/// - parameter key: The key whose item should be fetched
 	/// - returns: The item from the cache if it exists, or `nil` if an item could not be found
 	///
-	open func itemForKey<T, K: Hashable>(_ key: K) -> T? {
+	open func item<T, K: Hashable>(for key: K) -> T? {
 		if let item = cacheDictionary[AnyKey(key)] as? T {
 			return item
 		}
@@ -104,13 +104,13 @@ open class KingCache {
 	///
 	/// - parameter key: The key whose item should be removed
 	///
-	open func removeItemForKey<K: Hashable>(_ key: K) {
+	open func remove<K: Hashable>(for key: K) {
 		cacheDictionary[AnyKey(key)] = nil
 	}
 
 	/// Clears the entire cache.
 	///
-	open func removeAllItems() {
+	open func removeAll() {
 		cacheDictionary.removeAll()
 	}
 
@@ -120,13 +120,13 @@ open class KingCache {
 	///
 	open subscript(key: Int) -> Any? {
 		get {
-			return itemForKey(key)
+			return item(for: key)
 		}
 		set {
 			if let newValue = newValue {
-				setItem(newValue, forKey: key)
+				set(item: newValue, for: key)
 			} else {
-				removeItemForKey(key)
+				remove(for: key)
 			}
 		}
 	}
@@ -135,13 +135,13 @@ open class KingCache {
 	///
 	open subscript(key: Float) -> Any? {
 		get {
-			return itemForKey(key)
+			return item(for: key)
 		}
 		set {
 			if let newValue = newValue {
-				setItem(newValue, forKey: key)
+				set(item: newValue, for: key)
 			} else {
-				removeItemForKey(key)
+				remove(for: key)
 			}
 		}
 	}
@@ -150,13 +150,13 @@ open class KingCache {
 	///
 	open subscript(key: String) -> Any? {
 		get {
-			return itemForKey(key)
+			return item(for: key)
 		}
 		set {
 			if let newValue = newValue {
-				setItem(newValue, forKey: key)
+				set(item: newValue, for: key)
 			} else {
-				removeItemForKey(key)
+				remove(for: key)
 			}
 		}
 	}
