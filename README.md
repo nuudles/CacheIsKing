@@ -9,10 +9,11 @@
 ## Features
 
 - Simply set, get, and remove items based on any key that is `Hashable`
+- Remove items for any key that matches a filter
 - The cache is cleared when the app receives a memory warning
 - Similar to `NSCache`, the cache is cleared when the app enters the background
 - Subscripts are supported for `String`, `Int`, and `Float` keys
-- `itemForKey` uses generics so you don't have to cast the return value when the type is inferred correctly
+- `item(for:)` uses generics so you don't have to cast the return value when the type is inferred correctly
 - Similar to `NSCache`, the cache can have a `countLimit` set to ensure that the cache doesn't get too large
 
 ## Requirements
@@ -57,9 +58,9 @@ Simply use the `KingCache` class similar to how you'd use a `NSCache`. Using the
 
 ```swift
 let cache = KingCache()
-cache.setItem(123, forKey: "123")
+cache.set(item: 123, for: "123")
 
-if let item: Int = cache.itemForKey(456) {
+if let item: Int = cache.item(for: 456) {
 	doSomethingWithItem(item)
 }
 ```
