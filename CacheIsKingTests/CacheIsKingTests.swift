@@ -193,6 +193,47 @@ class CacheIsKingTests: XCTestCase {
 		XCTAssert(cache.count == 4)
 	}
 
+	func testRemoveMatching() {
+		let cache = KingCache()
+		cache.set(item: 123, for: "123")
+		cache.set(item: 1234, for: "1234")
+		cache.set(item: 12345, for: "12345")
+		cache.set(item: 234, for: "234")
+		cache.set(item: 345, for: "345")
+
+		XCTAssertEqual(cache.count, 5)
+
+		// Filter out all keys with prefix "1"
+		cache.remove { (key: String) -> Bool in
+			return key.hasPrefix("1")
+		}
+
+		XCTAssertEqual(cache.count, 2)
+		XCTAssertNil(cache.item(for: "123"))
+		XCTAssertNil(cache.item(for: "1234"))
+		XCTAssertNil(cache.item(for: "12345"))
+		XCTAssertEqual(cache.item(for: "234"), .some(234))
+		XCTAssertEqual(cache.item(for: "345"), .some(345))
+
+		// Filtering with a different kind of key should have no effect
+		cache.remove { (_: Int) -> Bool in
+			return true
+		}
+
+		XCTAssertEqual(cache.count, 2)
+		XCTAssertEqual(cache.item(for: "234"), .some(234))
+		XCTAssertEqual(cache.item(for: "345"), .some(345))
+
+		// Filtering with just true should remove all
+		cache.remove { (_: String) -> Bool in
+			return true
+		}
+
+		XCTAssertEqual(cache.count, 0)
+		XCTAssertNil(cache.item(for: "234"))
+		XCTAssertNil(cache.item(for: "345"))
+	}
+
 	func testCountLimit() {
 		let cache = KingCache()
 		cache.set(item: 123, for: 123)

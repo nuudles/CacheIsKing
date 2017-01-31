@@ -15,7 +15,7 @@ import Foundation
 /// `Hashable` key to be used in the cache dictionary
 struct AnyKey: Hashable {
 	/// The underlying value
-	fileprivate let underlying: Any
+	let underlying: Any
 	/// The hashing function
 	fileprivate let hashValueFunc: () -> Int
 	/// The equality function

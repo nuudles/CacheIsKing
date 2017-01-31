@@ -108,6 +108,19 @@ open class KingCache {
 		cacheDictionary[AnyKey(key)] = nil
 	}
 
+	/// Discards all items for any key that matches the given filter.
+	///
+	/// - parameter filter: Closure that returns true for keys that should be removed
+	///
+	open func remove<K: Hashable>(matching filter: (K) -> Bool) {
+		for key in cacheDictionary.keys {
+			guard let key = key.underlying as? K else { continue }
+			if filter(key) {
+				remove(for: key)
+			}
+		}
+	}
+
 	/// Clears the entire cache.
 	///
 	open func removeAll() {
