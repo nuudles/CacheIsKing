@@ -35,8 +35,7 @@ class CacheIsKingTests: XCTestCase {
 		XCTAssert(cache.count == 3)
 		if let fetchedArray: [Int] = cache.itemForKey(5) {
 			XCTAssert(fetchedArray == array)
-		}
-		else {
+		} else {
 			XCTFail("Expected an int array")
 		}
 
@@ -124,7 +123,7 @@ class CacheIsKingTests: XCTestCase {
 		cache[floatKey] = 123
 		XCTAssert(cache[floatKey] as? Int == .some(123))
 		XCTAssert(cache.count == 1)
-		
+
 		cache[floatKey] = nil
 		XCTAssert(cache[floatKey] as? Int == .none)
 		XCTAssert(cache.count == 0)
@@ -160,7 +159,8 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.count == 4)
 
-		NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: UIApplication.shared)
+		NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning,
+		                                object: UIApplication.shared)
 
 		XCTAssert(cache.count == 0)
 
@@ -171,7 +171,8 @@ class CacheIsKingTests: XCTestCase {
 
 		XCTAssert(cache.count == 4)
 
-		NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidEnterBackground, object: UIApplication.shared)
+		NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidEnterBackground,
+		                                object: UIApplication.shared)
 
 		XCTAssert(cache.count == 0)
 

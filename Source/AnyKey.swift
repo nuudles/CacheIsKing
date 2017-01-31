@@ -11,7 +11,8 @@ import Foundation
 /// This code was taken from:
 /// http://stackoverflow.com/questions/24119624/how-to-create-dictionary-that-can-hold-anything-in-key-or-all-the-possible-type
 ///
-/// `AnyKey` is a simple struct that conforms to `Hashable` to allow any other `Hashable` key to be used in the cache dictionary
+/// `AnyKey` is a simple struct that conforms to `Hashable` to allow any other
+/// `Hashable` key to be used in the cache dictionary
 struct AnyKey: Hashable {
 	/// The underlying value
 	fileprivate let underlying: Any
@@ -25,7 +26,7 @@ struct AnyKey: Hashable {
 		// Capture the key's hashability and equatability using closures.
 		// The Key shares the hash of the underlying value.
 		hashValueFunc = { key.hashValue }
-		
+
 		// The Key is equal to a Key of the same underlying type,
 		// whose underlying value is "==" to ours.
 		equalityFunc = {
@@ -40,6 +41,6 @@ struct AnyKey: Hashable {
 	var hashValue: Int { return hashValueFunc() }
 }
 
-func ==(x: AnyKey, y: AnyKey) -> Bool {
-	return x.equalityFunc(y.underlying)
+func == (lhs: AnyKey, rhs: AnyKey) -> Bool {
+	return lhs.equalityFunc(rhs.underlying)
 }

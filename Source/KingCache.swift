@@ -125,8 +125,7 @@ open class KingCache {
 		set {
 			if let newValue = newValue {
 				setItem(newValue, forKey: key)
-			}
-			else {
+			} else {
 				removeItemForKey(key)
 			}
 		}
@@ -141,8 +140,7 @@ open class KingCache {
 		set {
 			if let newValue = newValue {
 				setItem(newValue, forKey: key)
-			}
-			else {
+			} else {
 				removeItemForKey(key)
 			}
 		}
@@ -157,8 +155,7 @@ open class KingCache {
 		set {
 			if let newValue = newValue {
 				setItem(newValue, forKey: key)
-			}
-			else {
+			} else {
 				removeItemForKey(key)
 			}
 		}
