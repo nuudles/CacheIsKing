@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'CacheIsKing'
-  s.version = '0.0.4'
+  s.version = '0.0.5'
   s.license = 'MIT'
   s.summary = 'A simple cache that can hold anything, including Swift items'
   s.homepage = 'https://github.com/nuudles/CacheIsKing'
